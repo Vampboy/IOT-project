@@ -78,7 +78,8 @@ def GPS():                          #GPS value
 adc=MCP3208()
 
 def calculate():
-        humidity,temp=Adafruit_DHT.read_retry(sensor,sen)
+
+    humidity,temp=Adafruit_DHT.read_retry(sensor,sen)
 	print ("humidity:",humidity,"RH")       #HUmidity reading
 	print ("temp:",temp,"C")                #temperature value
 	gps_coords=GPS()                        #gps coordinates will get
@@ -88,17 +89,14 @@ def calculate():
 	
 
 	if io.input(pir)==True:                 #pir status
-            print ('person is detected')
+            list=['person is detected',gps_coords,humidity,temp,value]
             time.sleep(0.5)
         else:               
-            print ('person is not detected')
+            list=[0,'person is not detected',gps_coords,humidity,temp,value]
 
-        list=[0,gps_coords,humidity,temp,value]
         
         #list=[0,1,2,3,4]
         return list
-
-
 
 
 
