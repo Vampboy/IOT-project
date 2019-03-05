@@ -58,7 +58,7 @@ def GPS():                          #GPS value
     try:
         data = ser.readline()
     except:
-	print ("loading") 
+	    print ("loading") 
 	#wait for the serial port to churn out data
  
     if data[0:6] == '$GPGGA': # the long and lat data are always contained in the GPGGA string of the NMEA data
@@ -67,40 +67,39 @@ def GPS():                          #GPS value
  
 	#parse the latitude and print
         latval = msg.latitude
-	concatlat = "lat:" + str(latval)
+    concatlat = "lat:" + str(latval)
 	#print concatlat
-	longval = msg.longitude
-	concatlong = "long:"+ str(longval)
+    longval = msg.longitude
+    concatlong = "long:"+ str(longval)
 	#print concatlong
            
-	time.sleep(0.5)
-	return [latval,longval]
+    time.sleep(0.5)
+    return [latval,longval]
 adc=MCP3208()
 
 def calculate():
-
     humidity,temp=Adafruit_DHT.read_retry(sensor,sen)
-	print ("humidity:",humidity,"RH")       #HUmidity reading
-	print ("temp:",temp,"C")                #temperature value
-	gps_coords=GPS()                        #gps coordinates will get
-	value=adc.read(0)
-	print('gas value:',value)               #gas sensor value and status
-	time.sleep(0.5)
-	
+    print ("humidity:",humidity,"RH")       #HUmidity reading
+    print ("temp:",temp,"C")                #temperature value
+    gps_coords=GPS()                        #gps coordinates will get
+    value=adc.read(0)
+    print('gas value:',value)               #gas sensor value and status
+    time.sleep(0.5)
 
-	if io.input(pir)==True:                 #pir status
+
+    if io.input(pir)==True:                 #pir status
             list=['person is detected',gps_coords,humidity,temp,value]
             time.sleep(0.5)
-        else:               
-            list=[0,'person is not detected',gps_coords,humidity,temp,value]
+    else:               
+        list=['person is not detected',gps_coords,humidity,temp,value]
 
         
         #list=[0,1,2,3,4]
-        return list
+    return list
 
 
 
-app = Flask(__name__)
+app = Flask(__name__,static_url_path='/static')
 app.config['SECRET_KEY'] = 'secret!'
 app.config['DEBUG'] = True
 
